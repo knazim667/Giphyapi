@@ -1,0 +1,39 @@
+body {
+    
+    font-family: fantasy,sans-serif;
+}
+
+
+.form {
+    float: right;
+    padding: 10px;
+    width: 400px;
+    clear: both;
+    overflow: auto;
+
+}
+
+.btn-info {
+    
+    margin-top: 10px;
+    width: 100px;
+    margin-left: 5px;
+}
+
+#animal-view {
+    
+    margin: 5px;
+
+}
+
+
+#gifs-appear-here {
+    
+    margin: 10px;
+    clear: both;
+    overflow: auto;
+    float: left;
+    
+
+}
+
