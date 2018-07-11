@@ -2,12 +2,14 @@
 var animals = ["Cat","Dog", "Bird", "Tiger", "Lion", "Elephant", "Pig", "Horse", "Goat", "Bear"];
 
 
-$("#animal-view").on("click", function(){
+//$("#animal-view").on("click", function(event){
+    $(document).on('click', '.btn-animal', function() {
+        var animal = $(this).attr('data-name')
+   
+    console.log(animal);
+  
     
- 
-    var animal = $(this).attr("data-animal");
-    
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=Y5MNOyYYTBkGUZZvgCze54053mci3V8t&limit=10";
 
     
     
@@ -16,29 +18,33 @@ $("#animal-view").on("click", function(){
         url: queryURL,
         method: "GET"
     }).then(function(response){
-        console.log(response);
+     
         
         var result = response.data;
-        console.log(result);
+        
         
        for (var i= 0; i < result.length; i++) {
            
            if(result[i].rating !== "r" && result[i].rating !== "pg-13"){
                
                var gifDiv = $("<div class='col-md-4'>");
-               console.log(gifDiv);
+               
                
                var rating = result[i].rating;
                
                var p = $("<p>").text("Rating: " + rating);
                
-               var animalImage = $("<img>  <br>");
+               var animalImage = $("<img id='gif'>  <br>");
              
                
                animalImage.attr("src", result[i].images.fixed_height.url);
                animalImage.attr("alt", "animal Image");
-               var staticSrc = result[i].images.fixed_height_still.url;
-               console.log(animalImage);
+               animalImage.addClass("animate");
+               
+               $(".animate").on("click" , function(){
+                   $(this).remove().append("src", result[i].images.fixed_height.url);
+               });
+            
                
                gifDiv.append(p);
                gifDiv.append(animalImage);
@@ -51,6 +57,8 @@ $("#animal-view").on("click", function(){
         
 });
 
+            
+            
 
 
 
@@ -61,7 +69,7 @@ function renderButtons(){
     for(var i = 0; i < animals.length; i++) {
     
     var a = $("<button>");
-    a.addClass("btn btn-info");
+    a.addClass("btn btn-info btn-animal");
     a.attr("data-name", animals[i]);
     a.text(animals[i]);
     $("#animal-view").append(a);
