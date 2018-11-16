@@ -53,11 +53,7 @@ var animals = ["Cat","Dog", "Bird", "Tiger", "Lion", "Elephant", "Pig", "Horse",
                /*$("#gif").on('click' , function(){
                    $(this).attr('src', src.replace(result[i].images.fixed_height.url));
                });*/
-               
-                
-            
-               
-               
+     
            }
        }
         
