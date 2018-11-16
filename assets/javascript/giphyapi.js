@@ -11,7 +11,7 @@ var animals = ["Cat","Dog", "Bird", "Tiger", "Lion", "Elephant", "Pig", "Horse",
     
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=Y5MNOyYYTBkGUZZvgCze54053mci3V8t&limit=10";
 
-    
+    console.log(queryURL);
     
     $.ajax({
         
@@ -19,10 +19,12 @@ var animals = ["Cat","Dog", "Bird", "Tiger", "Lion", "Elephant", "Pig", "Horse",
         method: "GET"
     }).then(function(response){
      
-        
+        $('#gifs-appear-here').empty();
         var result = response.data;
         
-        
+        if (result == ''){
+            alert('There isnt a gif for this Selected Button');
+        }
        for (var i= 0; i < result.length; i++) {
            
            if(result[i].rating !== "r" && result[i].rating !== "pg-13"){
@@ -37,27 +39,43 @@ var animals = ["Cat","Dog", "Bird", "Tiger", "Lion", "Elephant", "Pig", "Horse",
                var animalImage = $("<img id='gif'>  <br>");
              
                
-               animalImage.attr("src", result[i].images.fixed_height.url);
+               animalImage.attr("src", result[i].images.fixed_height_still.url);
+               animalImage.attr("data-still", result[i].images.fixed_height_still.url);
+               animalImage.attr("data-animate", result[i].images.fixed_height.url);
+               animalImage.attr("data-state", "still");
                animalImage.attr("alt", "animal Image");
-               animalImage.addClass("animate");
-               
-               $(".animate").on("click" , function(){
-                   $(this).remove().append("src", result[i].images.fixed_height.url);
-               });
-            
-               
+               animalImage.addClass("image");
+           
                gifDiv.append(p);
                gifDiv.append(animalImage);
                
                $("#gifs-appear-here").prepend(gifDiv)
+               /*$("#gif").on('click' , function(){
+                   $(this).attr('src', src.replace(result[i].images.fixed_height.url));
+               });*/
+               
+                
+            
+               
+               
            }
        }
         
     });
-        
+    
 });
 
-            
+$(document).on('click', '.image', function() {
+    var state = $(this).attr('data-state');
+  if( state == 'still'){
+      $(this).attr('src', $(this).data('animate'));
+      $(this).attr('data-state', 'animate');
+  }
+  else {
+      $(this).attr('src', $(this).data('still'));
+      $(this).attr('data-state', 'still');
+  }
+   });            
             
 
 
